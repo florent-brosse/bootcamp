@@ -61,3 +61,27 @@ CREATE MATERIALIZED VIEW  IF NOT exists atwater.customer_by_email
     PRIMARY KEY (email, customer_id);
 
 
+CREATE TABLE IF NOT exists atwater.rollup (
+    rollup_type text,
+    rollup_time text,
+    rollup_grouping_id text,
+    rollup_sub_grouping_id text,
+    rollup_value int,
+    PRIMARY KEY ((rollup_type, rollup_time), rollup_grouping_id, rollup_sub_grouping_id)
+    )WITH compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_unit': 'DAYS', 'compaction_window_size': '1'};
+
+
+CREATE TABLE atwater.raw_data (
+    year int,
+    month int,
+    day int,
+    hour int,
+    minute int,
+    second int,
+    uuid text,
+    record_type_code text,
+    value text,
+    PRIMARY KEY ((year, month, day, hour, minute, second), uuid)
+    )WITH compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_unit': 'DAYS', 'compaction_window_size': '1'};
+
+
