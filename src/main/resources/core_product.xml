@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<schema name="autoSolrSchema" version="1.5">
+    <types>
+        <fieldType class="org.apache.solr.schema.TextField" name="TextField">
+            <analyzer>
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
+            </analyzer>
+        </fieldType>
+        <fieldType class="org.apache.solr.schema.TimeUUIDField" name="TimeUUIDField"/>
+        <fieldType class="org.apache.solr.schema.TrieFloatField" name="TrieFloatField"/>
+        <fieldType class="com.datastax.bdp.search.solr.core.types.DecimalStrField" name="DecimalStrField"/>
+        <fieldType class="org.apache.solr.schema.TrieIntField" name="TrieIntField"/>
+        <fieldType class="org.apache.solr.schema.StrField" name="StrField"/>
+    </types>
+    <fields>
+        <field indexed="true" docValues="true" multiValued="false" name="product_id" stored="true" type="TimeUUIDField"/>
+        <field indexed="true" docValues="false" multiValued="false" name="name" stored="true" type="TextField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="name_sort" stored="true" type="StrField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="brandname" stored="true" type="StrField"/>
+        <field indexed="true" docValues="false" multiValued="false" name="short_description" stored="true" type="TextField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="department" stored="true" type="StrField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="sku" stored="true" type="StrField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="upc" stored="true" type="StrField"/>
+        <field indexed="true" docValues="true" multiValued="true" name="product_tags" stored="true" type="StrField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="rating_count" stored="true" type="TrieIntField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="avg_rating" stored="true" type="TrieFloatField"/>
+        <field indexed="true" docValues="true" multiValued="false" name="price" stored="true" type="DecimalStrField"/>
+        <field indexed="true" docValues="true" multiValued="true" name="location_with_stock" stored="true" type="StrField"/>
+    </fields>
+    <uniqueKey>product_id</uniqueKey>
+    <copyField dest="name_sort" source="name"/>
+
+</schema>

@@ -1,0 +1,96 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.datastax.enablement.bootcamp</groupId>
+    <artifactId>boot-camp-java</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>boot-camp-java</name>
+    <properties>
+        <dse.version>5.1.5</dse.version>
+        <scope.provided>provided</scope.provided>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.datastax.dse</groupId>
+            <artifactId>dse-spark-dependencies</artifactId>
+            <version>${dse.version}</version>
+            <scope>${scope.provided}</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.fluttercode.datafactory</groupId>
+            <artifactId>datafactory</artifactId>
+            <version>0.8</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>intellij</id>
+            <properties>
+                <scope.provided>compile</scope.provided>
+            </properties>
+        </profile>
+    </profiles>
+
+    <repositories>
+        <repository>
+            <id>DataStax-Repo</id>
+            <url>https://repo.datastax.com/public-repos/</url>
+        </repository>
+    </repositories>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <!-- Additional configuration. -->
+                </configuration>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
