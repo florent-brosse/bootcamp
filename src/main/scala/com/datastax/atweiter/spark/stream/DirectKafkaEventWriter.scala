@@ -1,3 +1,5 @@
+package com.datastax.atweiter.spark.stream
+
 import java.util.{Calendar, UUID}
 
 import com.datastax.driver.core.Session

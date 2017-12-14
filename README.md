@@ -62,3 +62,12 @@ conf kafka
 `bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic events`
 
 `bin/kafka-console-producer.sh --broker-list localhost:9092 --topic events`
+
+
+## ML recommendation
+
+`SparkMLProductRecommendationBatchJob` read all data from the table atwater.review and create the table atwater.prediction
+
+we can get best predictions for an user:
+
+`select * from atwater.prediction where customer_id=8f4374e0-e0b3-11e7-b277-673b433fee46 ;`

@@ -1,4 +1,4 @@
-DROP KEYSPACE atwater;
+DROP KEYSPACE atwater; // be carefull !
 CREATE KEYSPACE atwater WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1}; // change replication in production
 
 CREATE TABLE IF NOT exists atwater.product(
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT exists atwater.rollup (
     )WITH compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_unit': 'DAYS', 'compaction_window_size': '1'};
 
 
-CREATE TABLE atwater.raw_data (
+CREATE TABLE IF NOT exists atwater.raw_data (
     year int,
     month int,
     day int,
@@ -83,5 +83,23 @@ CREATE TABLE atwater.raw_data (
     value text,
     PRIMARY KEY ((year, month, day, hour, minute, second), uuid)
     )WITH compaction = {'class': 'TimeWindowCompactionStrategy', 'compaction_window_unit': 'DAYS', 'compaction_window_size': '1'};
+
+CREATE TABLE IF NOT exists atwater.review(
+    product_id timeuuid,
+    customer_id timeuuid,
+    review_date timeuuid,
+    title text,
+    comment text,
+    rating int,
+    PRIMARY KEY((product_id),customer_id) // one review by customer by product is authorized
+);
+
+CREATE TABLE IF NOT exists atwater.prediction(
+    product_id timeuuid,
+    customer_id timeuuid,
+    prediction double,
+    PRIMARY KEY(customer_id,product_id)
+);
+
 
 
